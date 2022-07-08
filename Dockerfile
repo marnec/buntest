@@ -10,6 +10,8 @@ RUN curl -fsSL https://bun.sh/install | bash
 COPY package*.json ./
 
 RUN bun install
+ENV BUN_INSTALL="/root/.bun"
+ENV PATH="$BUN_INSTALL/bin:$PATH"
 # If you are building your code for production
 # RUN npm ci --only=production
 
