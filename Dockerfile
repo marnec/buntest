@@ -1,26 +1,24 @@
-FROM alpine
+FROM node:14.19.3
 
 # Create app directory
 WORKDIR /usr/src/app
 
-RUN apk add bash
-RUN apk add curl
+# RUN apt update && apt install -y curl unzip && rm -rf /var/lib/apt/lists/*
+# # RUN apk add bash
 
-RUN curl -fsSL https://bun.sh/install | bash
-ENV BUN_INSTALL="/root/.bun"
-ENV PATH="$BUN_INSTALL/bin:$PATH"
+# RUN curl -fsSL https://bun.sh/install | bash
 
+# ENV BUN_INSTALL="/root/.bun"
+# ENV PATH="$BUN_INSTALL/bin:$PATH"
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 COPY package*.json ./
+RUN npm install
 
-RUN bun install
-# If you are building your code for production
-# RUN npm ci --only=production
 
 # Bundle app source
 COPY . .
 
-EXPOSE 8080
-CMD [ "bun", "run", "start:prod" ]
+EXPOSE 3000
+CMD [ "npm", "run", "start:prod" ]
